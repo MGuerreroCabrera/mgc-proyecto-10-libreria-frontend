@@ -1,0 +1,23 @@
+header {
+    width: 100%;
+    height: 10svh;
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: var(--mgc-padding-l);
+    background-color: var(--mgc-sand);
+}
+
+ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--mgc-gap-l);
+}
+
+a {
+    color: var(--mgc-dark-brown);
+    font-size: var(--mgc-font-size-s);
+}
