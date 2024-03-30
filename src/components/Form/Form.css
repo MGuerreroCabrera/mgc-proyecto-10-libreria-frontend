@@ -1,0 +1,19 @@
+.form {
+    width: 40vw;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 1px 5px 6px -1px rgba(0,0,0,0.44);
+    -webkit-box-shadow: 1px 5px 6px -1px rgba(0,0,0,0.44);
+    -moz-box-shadow: 1px 5px 6px -1px rgba(0,0,0,0.44);
+    gap: var(--mgc-gap-l);
+    padding: var(--mgc-padding-l);
+}
+
+@media only screen and (max-width: 390px) {
+    .form {
+        width: 100vw;
+    }
+}

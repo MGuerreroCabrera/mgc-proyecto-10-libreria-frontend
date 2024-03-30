@@ -9,3 +9,9 @@ h1 {
     font-size: var(--mgc-font-size-l);
     color: var(--mgc-dark-brown);
 }
+
+@media only screen and (max-width: 390px) {
+    main {
+        padding: 0;
+    }
+}

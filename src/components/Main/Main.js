@@ -1,4 +1,6 @@
 import { Footer } from "../Footer/Footer";
+import { Form } from "../Form/Form";
+import { Input } from "../Input/Input";
 import "./Main.css";
 
 // Crear función que inyecta el main en el DOM
@@ -17,5 +19,27 @@ export const Main = (page) => {
     h1.textContent = page;
     main.append(h1);
     app.append(main);
+    switch (page) {
+        case "Home":
+            
+            break;
+        case "Login":
+            // Crear el formulario
+            const form = Form("loginForm");
+            // Crear los inputs del formulario
+            const inputName = Input("userName", "text", "Escribe tu e-mail");
+            const inputPassword = Input("password", "password", "*********");
+            // Inyectar inputs en el form
+            form.append(inputName, inputPassword);
+            main.append(form);
+            break;
+        case "Regiter":
+            break;
+        case "Favorites":
+            break;
+    
+        default:
+            break;
+    }
     Footer();
 }

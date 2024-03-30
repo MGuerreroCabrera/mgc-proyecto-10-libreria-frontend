@@ -1,0 +1,13 @@
+.form-input {
+    width: 450px;    
+    border: 1px solid var(--mgc-dark-brown);
+    padding: var(--mgc-padding-m);
+    border-radius: var(--mgc-radius-s);
+}
+
+/* Estilos para smartphones pequeños */
+@media only screen and (max-width: 390px) {
+    .form-input {
+        width: 350px;
+    }
+}

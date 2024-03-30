@@ -57,3 +57,20 @@ ol, ul {
   --mgc-font-size-base: clamp(1rem, 0.40vw + 0.9rem, 1.2rem);
   --mgc-font-size-l: clamp(1.5rem, 1vw + 1.2rem, 2rem);
 }
+
+
+/* MEDIA QUERIES */
+/* Estilos para tablets en modo paisaje y laptops */
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+  
+}
+
+/* Estilos para smartphones grandes y tablets */
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+  
+}
+
+
+/* Estilos para smartphones pequeños */
+@media only screen and (max-width: 480px) {
+}
