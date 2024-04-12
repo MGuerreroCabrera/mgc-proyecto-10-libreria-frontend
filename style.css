@@ -21,11 +21,13 @@ ol, ul {
   --mgc-color-002: #F4DFBA;
   --mgc-color-003: #CA965C;
   --mgc-color-004: #876445;
+  --mgc-color-005: red;
 
   --mgc-white: var(--mgc-color-001);
   --mgc-sand: var(--mgc-color-002);
   --mgc-light-brown: var(--mgc-color-003);
   --mgc-dark-brown: var(--mgc-color-004);
+  --mgc-error-color: var(--mgc-color-005);
 
   /* SPACINGS */
   /* Margins */
@@ -44,15 +46,17 @@ ol, ul {
   --mgc-gap-s: 5px;
   --mgc-gap-m: 10px;
   --mgc-gap-l: 20px;
-  --mgc-gap-xl: 40px;
+  --mgc-gap-xl: 50px;
 
   /* Radius */
+  --mgc-radius-xs: 5px;
   --mgc-radius-s: 10px;
   --mgc-radius-m: 20px;
   --mgc-radius-l: 30px;
   --mgc-radius-xl: 40px;
 
   /* Font sizes */
+  --mgc-font-size-xs: clamp(0.5rem, 0.15vw + 0.35rem, 0,7rem);
   --mgc-font-size-s: clamp(0.7rem, 0.15vw + 0.65rem, 0,9rem);
   --mgc-font-size-base: clamp(1rem, 0.40vw + 0.9rem, 1.2rem);
   --mgc-font-size-l: clamp(1.5rem, 1vw + 1.2rem, 2rem);

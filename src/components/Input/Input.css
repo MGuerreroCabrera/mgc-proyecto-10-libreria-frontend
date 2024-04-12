@@ -1,8 +1,12 @@
 .form-input {
-    width: 450px;    
+    min-width: 90%;    
     border: 1px solid var(--mgc-dark-brown);
     padding: var(--mgc-padding-m);
     border-radius: var(--mgc-radius-s);
+}
+
+*:required {
+    background-color: var(--mgc-light-brown);
 }
 
 /* Estilos para smartphones pequeños */

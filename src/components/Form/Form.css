@@ -1,15 +1,30 @@
 .form {
     width: 40vw;
-    height: 500px;
+    min-width: 350px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    box-shadow: 1px 5px 6px -1px rgba(0,0,0,0.44);
-    -webkit-box-shadow: 1px 5px 6px -1px rgba(0,0,0,0.44);
-    -moz-box-shadow: 1px 5px 6px -1px rgba(0,0,0,0.44);
+    border-radius: var(--mgc-radius-s);
+    background-color: var(--mgc-white);
     gap: var(--mgc-gap-l);
     padding: var(--mgc-padding-l);
+}
+
+p.error {
+    width: 90%;
+    background-color: #f28a8a;
+    border-left: 5px solid var(--mgc-error-color);
+    font-size: var(--mgc-font-size-xs);
+    padding: var(--mgc-padding-m);
+}
+div.text-form-container {
+    padding: var(--mgc-padding-l);
+}
+
+p.text-form {
+    font-size: var(--mgc-font-size-xs);
+    color: var(--mgc-dark-brown);
 }
 
 @media only screen and (max-width: 390px) {

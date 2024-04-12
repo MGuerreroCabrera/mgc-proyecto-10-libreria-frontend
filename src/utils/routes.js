@@ -5,23 +5,23 @@ import { Register } from "../pages/Register/Register";
 
 export const routes = [
     {
-        linkName: "Home",
-        src: "#",
+        linkName: "Inicio",
+        src: "home",
         function: Home
     },
     {
-        linkName: "Login",
-        src: "#",
+        linkName: "Iniciar sesión",
+        src: "login",
         function: Login
     },
     {
-        linkName: "Register",
-        src: "#",
+        linkName: "Registro",
+        src: "register",
         function: Register
     },
     {
-        linkName: "Favorites",
-        src: "#",
+        linkName: "Favoritos",
+        src: "favorites",
         function: Favorites
     }
 ];

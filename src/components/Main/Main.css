@@ -1,14 +1,9 @@
 main {
-    width: 100vw;
+    width: 100%;
     min-height: 80svh;
-    padding: var(--mgc-padding-xl);
     background-color: var(--mgc-sand);
 }
 
-h1 {
-    font-size: var(--mgc-font-size-l);
-    color: var(--mgc-dark-brown);
-}
 
 @media only screen and (max-width: 390px) {
     main {

@@ -21,3 +21,7 @@ a {
     color: var(--mgc-dark-brown);
     font-size: var(--mgc-font-size-s);
 }
+
+a:hover {
+    border-bottom: 1px solid var(--mgc-light-brown);
+}

@@ -1,0 +1,9 @@
+.general-button {
+    min-width: 150px;
+    cursor: pointer;
+    border: none;
+    border-radius: var(--mgc-radius-s);
+    padding: var(--mgc-padding-s);
+    background-color: var(--mgc-dark-brown);
+    color: var(--mgc-white);
+}
