@@ -4,7 +4,6 @@ import { Footer } from "../../components/Footer/Footer";
 import { Main } from "../../components/Main/Main";
 import { deleteOldMain } from "../../utils/functions";
 import { Button } from "../../components/Button/Button";
-import { removeFavorite } from "../Favorites/Favorites";
 
 
 export const Home = async () => {
@@ -29,13 +28,19 @@ export const Home = async () => {
         userDataContainer.classList.add("user-data-container");
         const userName = document.createElement("p");
         userName.classList.add("txt-home");
-        userName.textContent = "Bienvenido " + localStorage.getItem("userName") + " " + localStorage.getItem("lastName");
+        userName.textContent = localStorage.getItem("userName") + " " + localStorage.getItem("lastName");
         const btLogout = Button("Desconectar");
         btLogout.addEventListener("click", () => {
             // Eliminar token
             localStorage.removeItem("token");
             // Eliminar el id del usuario
             localStorage.removeItem("userId");
+            // Eliminar el nombre del usuario
+            localStorage.removeItem("userName");
+            // Eliminar los apellidos
+            localStorage.removeItem("lastName");
+            // Eliminar favoritos
+            localStorage.removeItem("favorites");
             // Recargar la página
             location.reload();
         });
@@ -76,9 +81,31 @@ export const Home = async () => {
 
 };
 
-export const printBooks = (parentNode, books, favorites = false) => {
-    // Recorres el objeto respuesta que contiene los registros obtenidos.
-    for (const book of books) {    
+export const printUserDataContainer = () => {
+    const main = document.querySelector("main");
+    // Crear capa e insertar datos de usuario
+    const userDataContainer = document.createElement("div");
+    userDataContainer.classList.add("user-data-container");
+    const userName = document.createElement("p");
+    userName.classList.add("txt-home");
+    userName.textContent = "Bienvenido " + localStorage.getItem("userName") + " " + localStorage.getItem("lastName");
+    const btLogout = Button("Desconectar");
+    btLogout.addEventListener("click", () => {
+        // Eliminar token
+        localStorage.removeItem("token");
+        // Eliminar el id del usuario
+        localStorage.removeItem("userId");
+        // Recargar la página
+        location.reload();
+    });
+    userDataContainer.append(userName, btLogout);
+    main.append(userDataContainer);
+}
+
+export const printBooks = async (parentNode, books, favorites = false) => {
+    
+    // Recorrer el objeto respuesta que contiene los registros obtenidos.
+    for (const book of books) {            
         // Crear los elementos HTML para insertar datos del libro
         const card = document.createElement("article");
         const coverContainer = document.createElement("div");
@@ -91,25 +118,31 @@ export const printBooks = (parentNode, books, favorites = false) => {
         const publishedDate = document.createElement("p");
         publishedDate.textContent = `Publicado en ${book.publishedOn}`;
         const price = document.createElement("p");
-        price.textContent = `${book.price.toFixed(2)} €`;
-
+        price.textContent = `${book.price.toFixed(2)} €`;              
+        
         // Comprobar si el usuario ha hecho login
         if(localStorage.getItem("userId") && !favorites) {
             // Crear el elemento HTML para la imagen del like
             const pushLike = document.createElement("img");
-            pushLike.src = "./assets/img/get-like.png";
+            // Crear array con el contenido de los favoritos del usuario
+            const arrayFavorites = localStorage.getItem("favorites").split(",");
+            if(arrayFavorites){
+                const found = arrayFavorites.find(item => item === book._id);
+                if(found) {
+                    pushLike.src = "./assets/img/like.png";
+                }else{
+                    pushLike.src = "./assets/img/get-like.png";
+                    pushLike.addEventListener("click", () => addFavorite(book._id));
+                }
+            }else{
+                pushLike.src = "./assets/img/get-like.png";
+                pushLike.classList.add("push-like-img");
+                pushLike.addEventListener("click", () => addFavorite(book._id));
+            }
             pushLike.classList.add("push-like-img");
-            pushLike.addEventListener("click", () => addFavorite(book._id));
-            card.append(pushLike);            
-        }else if(localStorage.getItem("userId") && favorites) {
-            const pushLike = document.createElement("img");
-            pushLike.src = "./assets/img/like.png";
-            pushLike.classList.add("push-like-img");
-            // Eliminar favorito
-            pushLike.addEventListener("click", () => removeFavorite(book._id));
-            card.append(pushLike);            
+            card.append(pushLike);
         }
-
+        
         // Inyectar elementos en el nodo padre
         card.append(coverContainer, title, publishedDate, price);
         // Inyectar la carta en el elemento padre
@@ -128,6 +161,17 @@ export const formatTitle = (title) => {
 
 // Función que añade un libro a favoritos del usuario
 const addFavorite = async (idBook) => {
+    // Recoger los favoritos del localStorage y añadirle el libro recibido
+    const oldFavorites = localStorage.getItem("favorites");
+    // Crear array de los favoritos con el valor del localStorage
+    const oldFavoritesTransform = oldFavorites.split(",");
+    // Inserta al final del array el idBook recibido
+    oldFavoritesTransform.push(idBook);
+    // Del array resultante crear un string con valores separados por comas
+    const newFavorites = oldFavoritesTransform.join(",");
+    // Actualizar el valor del localStorage
+    localStorage.setItem("favorites", newFavorites);
+
     // Crear objeto que contiene un array con el id del libro y pasarlo a JSON.stringify
     const book = JSON.stringify({ favorites:[idBook] });
     
@@ -142,10 +186,8 @@ const addFavorite = async (idBook) => {
     }
 
     // Llamar a la API con el id de usuario
-    const res = await fetch(`http://localhost:3000/api/v1/users/${localStorage.getItem("userId")}`, options);
-    //console.log(res);
-    // Pasar a JSON el resultado de la respuesta
-    const response = await res.json();
+    await fetch(`http://localhost:3000/api/v1/users/${localStorage.getItem("userId")}`, options);    
 
-    console.log(response);
+    // Recargar la página
+    location.reload();
 }

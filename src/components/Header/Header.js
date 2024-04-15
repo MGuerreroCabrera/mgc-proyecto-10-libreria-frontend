@@ -38,6 +38,7 @@ const printNavMenu = (loged = false) => {
                 // Crear escuchador de eventos para ejecutar la función correspondiente
                 a.addEventListener("click", (e) => {
                     e.preventDefault();            
+                    window.history.pushState({}, e.target.href);
                     route.function();
                 });
                 li.append(a);
@@ -55,7 +56,8 @@ const printNavMenu = (loged = false) => {
                 a.textContent = route.linkName;
                 // Crear escuchador de eventos para ejecutar la función correspondiente
                 a.addEventListener("click", (e) => {
-                    e.preventDefault();            
+                    e.preventDefault();                                          
+                    window.history.pushState({}, e.target.href);
                     route.function();
                 });
                 // a.addEventListener("click", route.function);

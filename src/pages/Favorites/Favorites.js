@@ -3,7 +3,7 @@ import "./Favorites.css";
 import { Footer } from "../../components/Footer/Footer";
 import { Main } from "../../components/Main/Main";
 import { deleteOldMain } from "../../utils/functions";
-import { printBooks } from "../Home/Home";
+import { printBooks, printUserDataContainer } from "../Home/Home";
 
 
 export const Favorites = async () => {
@@ -15,6 +15,8 @@ export const Favorites = async () => {
 
     // Seleccionar el main
     const main = document.querySelector("main");
+
+    printUserDataContainer();
 
     // Crear el contenedor de los libros
     const booksContainer = document.createElement("div");
@@ -28,7 +30,6 @@ export const Favorites = async () => {
 
     // Pasar objeto res a json
     const response = await res.json();
-    console.log(response);
 
     // Imprimir los libros por pantalla
     printBooks(booksContainer, response.favorites, true);
@@ -39,6 +40,7 @@ export const Favorites = async () => {
 
 // Función que añade un libro a favoritos del usuario
 export const removeFavorite = async (idBook) => {
+
     // Crear objeto que contiene un array con el id del libro y pasarlo a JSON.stringify
     const book = JSON.stringify({ favorites:[idBook] });
     
@@ -53,12 +55,7 @@ export const removeFavorite = async (idBook) => {
     }
 
     // Llamar a la API con el id de usuario
-    const res = await fetch(`http://localhost:3000/api/v1/users/delete-favorite/${localStorage.getItem("userId")}`, options);
-    //console.log(res);
-    // Pasar a JSON el resultado de la respuesta
-    const response = await res.json();
-
-    console.log(response);
+    await fetch(`http://localhost:3000/api/v1/users/delete-favorite/${localStorage.getItem("userId")}`, options);
 
     // Volver a cargar la página
     Favorites();

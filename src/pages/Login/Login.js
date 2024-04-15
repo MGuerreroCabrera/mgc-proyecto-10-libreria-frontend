@@ -71,6 +71,7 @@ export const Login = () => {
         localStorage.setItem("userId", response.userLoged._id);
         localStorage.setItem("userName", response.userLoged.name);
         localStorage.setItem("lastName", response.userLoged.lastName);
+        localStorage.setItem("favorites", response.userLoged.favorites);
         // Recargar la página. Evita que se repita el header.
         location.reload();
         // Redirigir a la página de inicio

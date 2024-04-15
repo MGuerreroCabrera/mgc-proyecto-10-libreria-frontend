@@ -6,22 +6,22 @@ import { Register } from "../pages/Register/Register";
 export const routes = [
     {
         linkName: "Inicio",
-        src: "home",
+        src: "/home",
         function: Home
     },
     {
         linkName: "Iniciar sesión",
-        src: "login",
+        src: "/login",
         function: Login
     },
     {
         linkName: "Registro",
-        src: "register",
+        src: "/register",
         function: Register
     },
     {
         linkName: "Favoritos",
-        src: "favorites",
+        src: "/favorites",
         function: Favorites
     }
 ];

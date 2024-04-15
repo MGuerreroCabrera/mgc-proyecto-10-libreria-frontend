@@ -6,6 +6,7 @@ header {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    z-index: 9;
     padding: var(--mgc-padding-l);
     background-color: var(--mgc-sand);
 }
