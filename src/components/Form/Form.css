@@ -27,8 +27,23 @@ p.text-form {
     color: var(--mgc-dark-brown);
 }
 
-@media only screen and (max-width: 390px) {
+/* MEDIA QUERIES */
+/* Estilos para tablets en modo paisaje y laptops */
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+  
+}
+
+/* Estilos para smartphones grandes y tablets */
+@media only screen and (min-width: 481px) and (max-width: 768px) {
     .form {
-        width: 100vw;
+        width: 80vw;
+    }
+}
+
+
+/* Estilos para smartphones pequeños */
+@media only screen and (max-width: 480px) {
+    .form {
+        width: 95vw;
     }
 }

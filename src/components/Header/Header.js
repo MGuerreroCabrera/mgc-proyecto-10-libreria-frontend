@@ -29,40 +29,13 @@ const printNavMenu = (loged = false) => {
     if(loged){
         for (const route of routes) {
             if(route.linkName !== "Registro" && route.linkName !== "Iniciar sesión") {
-                // Crear el elemento HTML li de la lista de enlaces
-                const li = document.createElement("li");
-                // Crear el lemento HTML a con los datos de la ruta
-                const a = document.createElement("a");
-                a.href = route.src;
-                a.textContent = route.linkName;
-                // Crear escuchador de eventos para ejecutar la función correspondiente
-                a.addEventListener("click", (e) => {
-                    e.preventDefault();            
-                    window.history.pushState({}, e.target.href);
-                    route.function();
-                });
-                li.append(a);
-                ul.append(li);
+                printElement(ul, route);
             }            
         }
     }else{
         for (const route of routes) {
             if(route.linkName !== "Favoritos") {
-                // Crear el elemento HTML li de la lista de enlaces
-                const li = document.createElement("li");
-                // Crear el lemento HTML a con los datos de la ruta
-                const a = document.createElement("a");
-                a.href = route.src;
-                a.textContent = route.linkName;
-                // Crear escuchador de eventos para ejecutar la función correspondiente
-                a.addEventListener("click", (e) => {
-                    e.preventDefault();                                          
-                    window.history.pushState({}, e.target.href);
-                    route.function();
-                });
-                // a.addEventListener("click", route.function);
-                li.append(a);
-                ul.append(li);
+                printElement(ul, route)
             }
         }
     }
@@ -72,4 +45,21 @@ const printNavMenu = (loged = false) => {
     header.append(nav);
     // Inyectar el header en app
     app.append(header);
+}
+
+const printElement = (ul, route) => {
+    // Crear el elemento HTML li de la lista de enlaces
+    const li = document.createElement("li");
+    // Crear el lemento HTML a con los datos de la ruta
+    const a = document.createElement("a");
+    a.href = route.src;
+    a.textContent = route.linkName;
+    // Crear escuchador de eventos para ejecutar la función correspondiente
+    a.addEventListener("click", (e) => {
+        e.preventDefault();            
+        window.history.pushState({}, e.target.href);
+        route.function();
+    });
+    li.append(a);
+    ul.append(li);
 }
