@@ -1,14 +1,19 @@
 header {
     width: 100%;
-    height: 10svh;
     position: sticky;
     top: 0;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     z-index: 9;
     padding: var(--mgc-padding-l);
     background-color: var(--mgc-sand);
+}
+h1.logo {
+    font-family: "Lilita One", sans-serif;
+    font-style: normal;
+    color: var(--mgc-dark-brown);
+    font-weight: var(--mgc-font-size-l);  
 }
 
 ul {
@@ -25,4 +30,23 @@ a {
 
 a:hover {
     border-bottom: 1px solid var(--mgc-light-brown);
+}
+
+/* MEDIA QUERIES */
+/* Estilos para tablets en modo paisaje y laptops */
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+  
+}
+
+/* Estilos para smartphones grandes y tablets */
+@media only screen and (min-width: 481px) and (max-width: 768px) {  
+}
+
+
+/* Estilos para smartphones pequeños */
+@media only screen and (max-width: 480px) {
+    header{
+        flex-direction: column;
+        gap: var(--mgc-gap-l);
+    }
 }

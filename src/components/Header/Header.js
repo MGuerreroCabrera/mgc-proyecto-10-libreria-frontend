@@ -4,23 +4,37 @@ import "./Header.css";
 
 // Crear función que crea el Header
 export const Header = () => {
-    // Comprobar si existe token para construir el menú de navegación
-    if(localStorage.getItem("token")){
-        // Pintar el nav con usuario logeado
-        printNavMenu(true);
-    }else{
-        // Pintar el nav sin tener usuario logeado
-        printNavMenu();
-    }
-};
-
-
-const printNavMenu = (loged = false) => {
     // Traer el div app para inyectarle el header
     const app = document.querySelector("#app");
     // Crear el elemento HTML header
     const header = document.createElement("header");
     header.id = "header";
+    // Inyectar logo en el header
+    printLogo(header);
+    // Comprobar si existe token para construir el menú de navegación
+    if(localStorage.getItem("token")){
+        // Pintar el nav con usuario logeado
+        printNavMenu(header, true);
+    }else{
+        // Pintar el nav sin tener usuario logeado
+        printNavMenu(header);
+    }
+    // Inyectar el header en app
+    app.append(header);
+};
+
+const printLogo = (header) => {
+    // Crear el elemento HTML h1 para logo
+    const logo = document.createElement("h1");
+    logo.classList.add("logo");
+    logo.textContent = "BIBLOVE";
+    // Inyectar logo en el header
+    header.append(logo);
+    console.log(header);
+}
+
+
+const printNavMenu = (header, loged = false) => {
     // Crear el elemento HTML nav para intectar menú de navegación
     const nav = document.createElement("nav");
     // Crear lista de enlaces
@@ -43,8 +57,6 @@ const printNavMenu = (loged = false) => {
     nav.append(ul);
     // Inyectar el nav en el header
     header.append(nav);
-    // Inyectar el header en app
-    app.append(header);
 }
 
 const printElement = (ul, route) => {
@@ -57,7 +69,7 @@ const printElement = (ul, route) => {
     // Crear escuchador de eventos para ejecutar la función correspondiente
     a.addEventListener("click", (e) => {
         e.preventDefault();            
-        window.history.pushState({}, e.target.href);
+        window.history.pushState({}, "", e.target.href);
         route.function();
     });
     li.append(a);

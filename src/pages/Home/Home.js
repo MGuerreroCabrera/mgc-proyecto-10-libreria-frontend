@@ -29,7 +29,7 @@ export const Home = async () => {
         userDataContainer.classList.add("user-data-container");
         const userName = document.createElement("p");
         userName.classList.add("txt-home");
-        userName.textContent = localStorage.getItem("userName") + " " + localStorage.getItem("lastName");
+        userName.textContent = "Usuario conectado: " + localStorage.getItem("userName") + " " + localStorage.getItem("lastName");
         const btLogout = Button("Desconectar");
         btLogout.addEventListener("click", () => {
             // Eliminar el contenido del localStorage

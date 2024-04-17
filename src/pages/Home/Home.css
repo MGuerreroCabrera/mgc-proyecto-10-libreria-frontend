@@ -4,10 +4,7 @@
     justify-content: center;
     align-items: center;
     border-bottom: 1px solid var(--mgc-dark-brown);
-    padding: var(--mgc-padding-l);    
 }
-
-
 .user-data-container {
     width: 100%;
     display: flex;
@@ -15,11 +12,12 @@
     justify-content: center;
     align-items: flex-end;
     border-bottom: 1px solid var(--mgc-dark-brown);
-    padding: var(--mgc-padding-l);    
+    padding: 0 var(--mgc-padding-l) var(--mgc-padding-l) 0;    
     gap: var(--mgc-gap-s);
 }
 
 .txt-home {
+    text-align: center;
     font-size: var(--mgc-font-size-s);
     color: var(--mgc-dark-brown);
 }
@@ -33,4 +31,22 @@
     align-items: center;
     gap: var(--mgc-gap-xl);
     padding: var(--mgc-padding-xl);
+}
+
+/* MEDIA QUERIES */
+/* Estilos para tablets en modo paisaje y laptops */
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+  
+}
+
+/* Estilos para smartphones grandes y tablets */
+@media only screen and (min-width: 481px) and (max-width: 768px) {  
+}
+
+
+/* Estilos para smartphones pequeños */
+@media only screen and (max-width: 480px) {
+    .txt-home {
+        font-size: 14px;
+    }
 }

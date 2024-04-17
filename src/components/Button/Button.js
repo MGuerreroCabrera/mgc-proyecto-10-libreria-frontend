@@ -7,7 +7,7 @@ export const Button = (textButton) => {
     // Asignar el texto del botón
     button.textContent = textButton;
     // Asignar la clase del boton
-    button.classList.add("btn-100");
+    button.classList.add("general-button");
     // Devolver el elemento
     return button;
 };
