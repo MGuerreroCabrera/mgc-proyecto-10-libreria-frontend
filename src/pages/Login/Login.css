@@ -1,7 +1,19 @@
 #form-login-container {
+    position: relative;
     width: 100%;
     min-height: 80svh;
     display: flex;
+    gap: var(--mgc-gap-s);
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+p.error-login {
+    width: 40vw;
+    min-width: 350px;
+    background-color: #f28a8a;
+    border-left: 5px solid var(--mgc-error-color);
+    font-size: var(--mgc-font-size-xs);
+    padding: var(--mgc-padding-m);
 }

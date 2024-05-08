@@ -11,8 +11,9 @@
     padding: var(--mgc-padding-l);
 }
 
-p.error {
-    width: 90%;
+p.error {    
+    width: 40vw;
+    min-width: 350px;
     background-color: #f28a8a;
     border-left: 5px solid var(--mgc-error-color);
     font-size: var(--mgc-font-size-xs);

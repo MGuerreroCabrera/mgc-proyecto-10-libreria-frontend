@@ -3,10 +3,19 @@
     border: 1px solid var(--mgc-dark-brown);
     padding: var(--mgc-padding-m);
     border-radius: var(--mgc-radius-s);
+    color: var(--mgc-color-black);
+    appearance: none;
+    outline: none;
 }
 
-*:required {
-    background-color: var(--mgc-light-brown);
+.form-invalid-input {
+    min-width: 90%;    
+    border: 1px solid var(--mgc-error-color);
+    padding: var(--mgc-padding-m);
+    border-radius: var(--mgc-radius-s);
+    color: var(--mgc-color-black);
+    appearance: none;
+    outline: none;
 }
 
 /* Estilos para smartphones pequeños */

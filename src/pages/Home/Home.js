@@ -51,8 +51,9 @@ export const Home = async () => {
         headerContainer.append(pHome);
         // Inyectar el headerContainer al main    
         main.append(headerContainer);
-    }    
-
+    }
+    //Controlar la petición de los libros al backend 😮🤔🤔
+   
     // Crear el contenedor de los libros
     const booksContainer = document.createElement("div");
     booksContainer.id = "books-container";
@@ -66,9 +67,9 @@ export const Home = async () => {
     // Pasar objeto res a json
     const response = await res.json();
 
-    // Imprimir los libros por pantalla
-    printBooks(booksContainer, response);    
-
+    // Imprimir los libros en pantalla
+    printBooks(booksContainer, response);   
+    
     // Añadir el pie de página
     Footer();
 

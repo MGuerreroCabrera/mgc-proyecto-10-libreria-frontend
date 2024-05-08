@@ -3,7 +3,7 @@ import { Footer } from "../../components/Footer/Footer";
 import { Form } from "../../components/Form/Form";
 import { Input } from "../../components/Input/Input";
 import { Main } from "../../components/Main/Main";
-import { deleteOldMain } from "../../utils/functions";
+import { deleteOldMain, validateForm } from "../../utils/functions";
 import { Login } from "../Login/Login";
 import "./Register.css";
 
@@ -11,7 +11,7 @@ import "./Register.css";
 export const Register = () => {
     // Eliminar main
     deleteOldMain();
-    // Crear nuevo main
+    // Crear nuevo main de la página
     Main();
     
     // Crear capa contenedora del formulario
@@ -31,9 +31,18 @@ export const Register = () => {
     // Añadir escuchador de evento al botón y crear la lógica del register
     btSend.addEventListener("click", async (event) => {
         event.preventDefault();
+        // Comprobar si el párrafo de error existe y eliminarlo si es así
+        const pError = document.querySelector(".error");
+        if(pError) {
+            pError.remove();
+        }
+        // Validar campos del formulario
+        let control = false;
+        control = validateForm("name", "email", "password");
+        if(control){return}
         // Recoger valores del formulario
         const name = inputName.value;
-        const lastName = inputLastName.value;
+        const lastName = inputLastName.value;        
         const email = inputEmail.value;
         const password = inputPassword.value;
         // Pasar los datos del usuario a formato JSON
@@ -55,30 +64,14 @@ export const Register = () => {
         const res = await fetch("http://localhost:3000/api/v1/users/", fetchOptions);
 
         // Comprobar si la dirección de correo electrónico ya está registrada
-        const pUserExists = validateError(res.status);
-        if(pUserExists) {
-            form.append(pUserExists);
-            return;
-        }
-        // Comprobar si ha habido algún error en el proceso de registro
-        const pRegisterError = validateError(res.status);
-        if(pRegisterError) {
-            form.append(pRegisterError);
-            return;
-        }
-        // Comprobar si el párrafo de error existe y eliminarlo si es así
-        const pError = document.querySelector(".error");
-        if(pError) {
-            pError.remove();
-        }
-        // Pasar resultado a formato JSON
-        const response = await res.json();
-
+        let control_user = false;
+        control_user = validateError(res.status);
+        if(control_user){return}
         // Vaciar el contenido del contenedor del formulario
         formContainer.innerHTML = "";
         // Crear mensaje CUENTA CREADA CON ÉXITO
         const pSuccess = document.createElement("p");
-        pSuccess.textContent = `Enhorabuena ${response.name} ${response.lastName}. Tu cuenta ha sido creada con éxito`;
+        pSuccess.textContent = `Enhorabuena ${res.name} ${res.lastName}. Tu cuenta ha sido creada con éxito`;
         // Crear párrafo con mensaje INICIAR SESIÓN
         const pLogin = document.createElement("p");
         pLogin.textContent = "Haz click en iniciar sesión para poder crear tu lista de favoritos.";
@@ -107,19 +100,25 @@ export const Register = () => {
 
 // Función que comprueba el error obtenido
 const validateError = (status) => {
-    // Crear párrafo de error y añadirlo al formulario
-    const p = document.createElement("p");
-    p.classList.add("error");
+    // // Crear párrafo de error y añadirlo al formulario
+    // const p = document.createElement("p");
+    // p.classList.add("error");
+    // Crear párrafo de error y añadirlo al DOM
+    const p = document.createElement("p");    
+    const parentNode = document.querySelector("#form-register-container");
+    const brotherNode = document.querySelector("#registerForm");
     switch (status) {
         case 409:
-            p.textContent = "Esta dirección de correo electrónico ya ha sido registrada. Contacta con soporte@mgc-library.com para solucionar el problema";        
-            break;
+            p.textContent = "Esta dirección de correo electrónico ya ha sido registrada. Pruebe con otra dirección de correo electrónico";        
+            p.classList.add("error");
+            parentNode.insertBefore(p, brotherNode);
+            return true;
         case 400:
             p.textContent = "Ha ocurrido un problema con el registro. Contacta con soporte@mgc-library.com para solucionar el problema";
-            break;    
+            p.classList.add("error");
+            parentNode.insertBefore(p, brotherNode);
+            return true;
         default:
-            return;
-            break;
+            return false;
     }
-    return p;
 }

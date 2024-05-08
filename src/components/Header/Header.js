@@ -30,7 +30,6 @@ const printLogo = (header) => {
     logo.textContent = "BIBLOVE";
     // Inyectar logo en el header
     header.append(logo);
-    console.log(header);
 }
 
 

@@ -9,7 +9,7 @@ export const Input = (inputName, inputType, placeholder, required = false) => {
     input.name = inputName;
     input.type = inputType;
     if(required) {
-        input.required = true;
+        input.setAttribute("required", "true");
         input.setCustomValidity("Por favor, rellena este campo.");
     }
     // Si recibimos placeholder asignárselo

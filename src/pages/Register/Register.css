@@ -1,7 +1,10 @@
 #form-register-container {
+    position: relative;
     width: 100%;
     min-height: 80svh;
     display: flex;
+    gap: var(--mgc-gap-s);
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }

@@ -5,8 +5,8 @@ import { Footer } from "../../components/Footer/Footer";
 import { Form } from "../../components/Form/Form";
 import { Input } from "../../components/Input/Input";
 import { Main } from "../../components/Main/Main";
-import { deleteOldMain } from "../../utils/functions";
 import { Home } from "../Home/Home";
+import { deleteOldMain, validateForm } from "../../utils/functions";
 
 
 export const Login = () => {
@@ -14,7 +14,7 @@ export const Login = () => {
     // Eliminar el anterior main en el caso de que exista
     deleteOldMain();
 
-    // Crear el main de la home
+    // Crear el main de la página
     Main();
 
     // Crear capa contenedora del formulario
@@ -32,9 +32,19 @@ export const Login = () => {
     // Añadir escuchador de eventos al click del botón
     btSend.addEventListener("click", async (event) => {
         event.preventDefault();
+        // Validar campos obligatorios del formulario
+        let control = false;
+        control = validateForm("userName", "password");
+        if(control){return}
+        // Comprobar si el párrafo de error existe y eliminarlo si es así
+        const pError = document.querySelector(".error");
+        if(pError) {
+            pError.remove();
+        }
         // Crear la lógica del login
         const email = inputName.value;
         const password = inputPassword.value;
+
         // Recoger valores del formulario
         const user = JSON.stringify({
             email,
@@ -52,18 +62,16 @@ export const Login = () => {
         const res = await fetch("http://localhost:3000/api/v1/users/login", fetchOptions);
         // Comprobar el estado de la respuesta por si ha habido error
         if(res.status === 400) {
-            // Crear párrafo de error y añadirlo al formulario
+            // Crear párrafo de error y añadirlo al DOM
             const p = document.createElement("p");
-            p.classList.add("error");
+            p.classList.add("error-login");
             p.textContent = "Usuario y/o contraseña incorrectos";
-            form.append(p);
+            const parentNode = document.querySelector("#form-login-container");
+            const brotherNode = document.querySelector("#loginForm");
+            parentNode.insertBefore(p, brotherNode);
             return;
         }
-        // Comprobar si el párrafo de error existe y eliminarlo si es así
-        const pError = document.querySelector(".error");
-        if(pError) {
-            pError.remove();
-        }
+        
         // Pasar resultado a formato JSON
         const response = await res.json();
         // Añadir elementos token y datos de usuario al localStorage

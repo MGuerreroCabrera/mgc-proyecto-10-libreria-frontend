@@ -24,12 +24,14 @@ ol, ul {
   --mgc-color-003: #CA965C;
   --mgc-color-004: #876445;
   --mgc-color-005: red;
+  --mgc-color-006: black;
 
   --mgc-white: var(--mgc-color-001);
   --mgc-sand: var(--mgc-color-002);
   --mgc-light-brown: var(--mgc-color-003);
   --mgc-dark-brown: var(--mgc-color-004);
   --mgc-error-color: var(--mgc-color-005);
+  --mgc-color-black: var(--mgc-color-006;)
 
   /* SPACINGS */
   /* Margins */
