@@ -1,3 +1,5 @@
+import { Main } from "../components/Main/Main";
+
 // Función que elimina el antiguo main en el caso de que exista
 export const deleteOldMain = () => {
     const oldMain = document.querySelector("main");
@@ -39,6 +41,26 @@ export const validateForm = (...inputs) => {
             input.placeholder = "";
         }
     }
+}
+
+export const failedRequest = () => {
+    // Crear capa contenedora del error
+    const divContainer = document.createElement("div");
+    divContainer.classList.add("div-failed-request");
+    // Crear párrafo con el error
+    const p = document.createElement("p");
+    p.classList.add("p-failed-request");
+    p.textContent = "¡¡ Upsss !! Ha ocurrido un error en la petición. Actualiza la página por favor";
+    // Inyectar párrafo en la capa contenedora del error
+    divContainer.append(p);
+    // Eliminar el main actual
+    deleteOldMain();
+    // Pintar el main de nuevo
+    Main();
+    // Inyectar la capa contenedora del error en el main
+    const divMain = document.querySelector("#main");
+    divMain.append(divContainer);
+
 }
 
 const isEmail = (email) => {

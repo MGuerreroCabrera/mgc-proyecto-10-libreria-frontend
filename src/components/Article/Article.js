@@ -1,3 +1,7 @@
+import { Home } from "../../pages/Home/Home";
+import { routeControl } from "../../utils/controlRoutes";
+import { failedRequest } from "../../utils/functions";
+import { Header } from "../Header/Header";
 import "./Article.css";
 
 export const Article = (book, favorites) => {
@@ -79,9 +83,13 @@ const addFavorite = async (idBook) => {
         body: book
     }
 
-    // Llamar a la API con el id de usuario
-    await fetch(`http://localhost:3000/api/v1/users/${localStorage.getItem("userId")}`, options);    
+    const res = await fetch(`http://localhost:3000/api/v1/users/${localStorage.getItem("userId")}`, options);
 
-    // Recargar la página
-    location.reload();
+    if(res.status === 200) {
+        Header();
+        Home();
+    } else {
+        console.log("ERROR");
+        alert("Error en la petición");
+    }
 }

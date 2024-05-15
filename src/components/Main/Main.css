@@ -4,6 +4,20 @@ main {
     background-color: var(--mgc-sand);
 }
 
+main .div-failed-request {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main .div-failed-request .p-failed-request {
+    padding: var(--mgc-padding-xl);
+    border-radius: var(--mgc-radius-m);
+    background-color: var(--mgc-white);
+    font-size: var(--mgc-font-size-base);
+}
 
 @media only screen and (max-width: 390px) {
     main {

@@ -5,9 +5,16 @@ import { Main } from "../../components/Main/Main";
 import { deleteOldMain } from "../../utils/functions";
 import { Button } from "../../components/Button/Button";
 import { Article } from "../../components/Article/Article";
+import { routeControl } from "../../utils/controlRoutes";
+import { books } from "../../utils/books";
 
 
 export const Home = async () => {
+    
+    // Controlar si ya se está en la home
+    if(routeControl === "/home") {       
+        return;
+    }
     // Eliminar el anterior main en el caso de que exista
     deleteOldMain();
 
@@ -19,11 +26,6 @@ export const Home = async () => {
     
     // Comprobar si hay token
     if(localStorage.getItem("token")) {
-        // Comprobar si existe la capa con el texto de bienvenida y eliminar
-        const oldHeaderContainer = document.querySelector(".header-container");
-        if(oldHeaderContainer) {
-            oldHeaderContainer.remove();
-        }
         // Crear capa e insertar datos de usuario
         const userDataContainer = document.createElement("div");
         userDataContainer.classList.add("user-data-container");
@@ -52,8 +54,8 @@ export const Home = async () => {
         // Inyectar el headerContainer al main    
         main.append(headerContainer);
     }
-    //Controlar la petición de los libros al backend 😮🤔🤔
-   
+
+
     // Crear el contenedor de los libros
     const booksContainer = document.createElement("div");
     booksContainer.id = "books-container";
@@ -61,14 +63,26 @@ export const Home = async () => {
     // Inyectar el contenedor de libros al main
     main.append(booksContainer);
 
-    // Hacer la petición al backend para que nos devuelva el listado de libros.
-    const res = await fetch("http://localhost:3000/api/v1/books");
+    //Controlar la petición de los libros al backend 😮🤔🤔
+    if(books.length === 0) {
 
-    // Pasar objeto res a json
-    const response = await res.json();
+        // Hacer la petición al backend para que nos devuelva el listado de libros.
+        const res = await fetch("http://localhost:3000/api/v1/books");
 
-    // Imprimir los libros en pantalla
-    printBooks(booksContainer, response);   
+        // Pasar objeto res a json
+        const response = await res.json();
+
+        for (const book of response) {
+            books.push(book);
+        }
+
+        // Imprimir los libros en pantalla obtenidos de la API
+        printBooks(booksContainer, response); 
+    } else {
+
+        // Imprimir los libros en pantalla cogiendo los datos del array
+        printBooks(booksContainer, books); 
+    }
     
     // Añadir el pie de página
     Footer();

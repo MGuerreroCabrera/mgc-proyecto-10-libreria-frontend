@@ -37,26 +37,3 @@ export const Favorites = async () => {
     // Añadir el pie de página
     Footer();
 };
-
-// Función que añade un libro a favoritos del usuario
-export const removeFavorite = async (idBook) => {
-
-    // Crear objeto que contiene un array con el id del libro y pasarlo a JSON.stringify
-    const book = JSON.stringify({ favorites:[idBook] });
-    
-    // Opciones para llamar a la API
-    const options = {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
-        },
-        body: book
-    }
-
-    // Llamar a la API con el id de usuario
-    await fetch(`http://localhost:3000/api/v1/users/delete-favorite/${localStorage.getItem("userId")}`, options);
-
-    // Volver a cargar la página
-    Favorites();
-}

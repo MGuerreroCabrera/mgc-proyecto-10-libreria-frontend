@@ -1,9 +1,15 @@
+import { saveRoute } from "../../utils/controlRoutes";
 import { routes } from "../../utils/routes";
 import "./Header.css";
 
 
 // Crear función que crea el Header
 export const Header = () => {
+    const oldHeaderContainer = document.querySelector("#header");
+    if(oldHeaderContainer) {
+        oldHeaderContainer.remove();
+    }
+    
     // Traer el div app para inyectarle el header
     const app = document.querySelector("#app");
     // Crear el elemento HTML header
@@ -34,15 +40,29 @@ const printLogo = (header) => {
 
 
 const printNavMenu = (header, loged = false) => {
+      
     // Crear el elemento HTML nav para intectar menú de navegación
     const nav = document.createElement("nav");
+
     // Crear lista de enlaces
     const ul = document.createElement("ul");
+
     // Comprobar si el menú debe ser el de usuario logeado
     if(loged){
+        // Recorrer array de rutas
         for (const route of routes) {
-            if(route.linkName !== "Registro" && route.linkName !== "Iniciar sesión") {
-                printElement(ul, route);
+            // Comprobar que no llegan las rutas Registro e Iniciar sesión ya que aquí debo estar loged
+            if(route.linkName !== "Registro" && route.linkName !== "Iniciar sesión") {        
+                // Validar si es favoritos
+                if(route.linkName === "Favoritos")
+                {
+                    // Comprobar si en el localStorage - favorites hay elemento
+                    if(localStorage.getItem("favorites").length !== 0){
+                        printElement(ul, route);
+                    }
+                } else {
+                    printElement(ul, route);
+                }
             }            
         }
     }else{
@@ -70,6 +90,7 @@ const printElement = (ul, route) => {
         e.preventDefault();            
         window.history.pushState({}, "", e.target.href);
         route.function();
+        saveRoute(route.src);
     });
     li.append(a);
     ul.append(li);

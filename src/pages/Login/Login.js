@@ -7,9 +7,10 @@ import { Input } from "../../components/Input/Input";
 import { Main } from "../../components/Main/Main";
 import { Home } from "../Home/Home";
 import { deleteOldMain, validateForm } from "../../utils/functions";
+import { Header } from "../../components/Header/Header";
 
 
-export const Login = () => {
+export const Login = (emailReceived = false, pwdReceived = false) => {
     
     // Eliminar el anterior main en el caso de que exista
     deleteOldMain();
@@ -37,13 +38,16 @@ export const Login = () => {
         control = validateForm("userName", "password");
         if(control){return}
         // Comprobar si el párrafo de error existe y eliminarlo si es así
-        const pError = document.querySelector(".error");
+        const pError = document.querySelector(".error-login");
         if(pError) {
             pError.remove();
         }
-        // Crear la lógica del login
+
+        // Crear variables email y password
         const email = inputName.value;
         const password = inputPassword.value;
+
+        // Crear la lógica del login        
 
         // Recoger valores del formulario
         const user = JSON.stringify({
@@ -60,6 +64,7 @@ export const Login = () => {
         }
         // Recoger resultado de la petición de login
         const res = await fetch("http://localhost:3000/api/v1/users/login", fetchOptions);
+
         // Comprobar el estado de la respuesta por si ha habido error
         if(res.status === 400) {
             // Crear párrafo de error y añadirlo al DOM
@@ -80,9 +85,10 @@ export const Login = () => {
         localStorage.setItem("userName", response.userLoged.name);
         localStorage.setItem("lastName", response.userLoged.lastName);
         localStorage.setItem("favorites", response.userLoged.favorites);
-        // Recargar la página. Evita que se repita el header.
-        location.reload();
-        // Redirigir a la página de inicio
+
+        Header();
+
+        // Cargar la página de inicio
         Home();
     })
     // Inyectar inputs en el form

@@ -1,7 +1,3 @@
-import { Button } from "../Button/Button";
-import { Footer } from "../Footer/Footer";
-import { Form } from "../Form/Form";
-import { Input } from "../Input/Input";
 import "./Main.css";
 
 // Crear función que inyecta el main en el DOM

@@ -1,10 +1,11 @@
 import { Button } from "../../components/Button/Button";
 import { Footer } from "../../components/Footer/Footer";
 import { Form } from "../../components/Form/Form";
+import { Header } from "../../components/Header/Header";
 import { Input } from "../../components/Input/Input";
 import { Main } from "../../components/Main/Main";
 import { deleteOldMain, validateForm } from "../../utils/functions";
-import { Login } from "../Login/Login";
+import { Home } from "../Home/Home";
 import "./Register.css";
 
 
@@ -38,7 +39,7 @@ export const Register = () => {
         }
         // Validar campos del formulario
         let control = false;
-        control = validateForm("name", "email", "password");
+        control = validateForm("name", "lastName", "email", "password");
         if(control){return}
         // Recoger valores del formulario
         const name = inputName.value;
@@ -66,24 +67,12 @@ export const Register = () => {
         // Comprobar si la dirección de correo electrónico ya está registrada
         let control_user = false;
         control_user = validateError(res.status);
-        if(control_user){return}
-        // Vaciar el contenido del contenedor del formulario
-        formContainer.innerHTML = "";
-        // Crear mensaje CUENTA CREADA CON ÉXITO
-        const pSuccess = document.createElement("p");
-        pSuccess.textContent = `Enhorabuena ${res.name} ${res.lastName}. Tu cuenta ha sido creada con éxito`;
-        // Crear párrafo con mensaje INICIAR SESIÓN
-        const pLogin = document.createElement("p");
-        pLogin.textContent = "Haz click en iniciar sesión para poder crear tu lista de favoritos.";
-        // ENLACE A INICIAR SESIÓN
-        const btLogin = Button("👉 Iniciar sesión");
-        // Inyectar mensajes en el formContainer
-        formContainer.append(pSuccess, pLogin, btLogin);        
-        btLogin.addEventListener("click", (event) => {
-            //location.reload();
-            event.preventDefault();
-            Login();
-        });
+        if(control_user)
+        {
+            return;
+        } else {
+            doLogin(email, password);
+        }
     })
     // Inyectar campos del formulario al formulario
     form.append(inputName, inputLastName, inputEmail, inputPassword, btSend);
@@ -100,9 +89,6 @@ export const Register = () => {
 
 // Función que comprueba el error obtenido
 const validateError = (status) => {
-    // // Crear párrafo de error y añadirlo al formulario
-    // const p = document.createElement("p");
-    // p.classList.add("error");
     // Crear párrafo de error y añadirlo al DOM
     const p = document.createElement("p");    
     const parentNode = document.querySelector("#form-register-container");
@@ -121,4 +107,37 @@ const validateError = (status) => {
         default:
             return false;
     }
+}
+
+const doLogin = async (email, password) => {  
+
+    // Recoger valores del formulario
+    const user = JSON.stringify({
+        email,
+        password
+    })
+    // Opciones del fetch
+    const fetchOptions = {
+        method: "POST",
+        body: user,
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }
+    // Recoger resultado de la petición de login
+    const res = await fetch("http://localhost:3000/api/v1/users/login", fetchOptions);
+    
+    // Pasar resultado a formato JSON
+    const response = await res.json();
+
+    // Añadir elementos token y datos de usuario al localStorage
+    localStorage.setItem("token", response.token);
+    localStorage.setItem("userId", response.userLoged._id);
+    localStorage.setItem("userName", response.userLoged.name);
+    localStorage.setItem("lastName", response.userLoged.lastName);
+    localStorage.setItem("favorites", response.userLoged.favorites);
+    
+    // Cargar la página de inicio
+    Header();
+    Home();
 }
