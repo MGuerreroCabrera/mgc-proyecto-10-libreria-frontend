@@ -6,4 +6,9 @@
     padding: var(--mgc-padding-m);
     background-color: var(--mgc-dark-brown);
     color: var(--mgc-white);
+    transition: all 0.5s;
+}
+
+.general-button:hover {
+    transform: scale(1.1);
 }
