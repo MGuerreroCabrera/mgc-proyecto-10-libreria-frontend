@@ -13,6 +13,7 @@ export const Article = (book, favorites) => {
     title.textContent = formatTitle(book.title);
     const publishedDate = document.createElement("p");
     publishedDate.textContent = `Publicado en ${book.publishedOn}`;
+    publishedDate.className = "small";
     
     // Crear sistema de valoración de libros.
     // Llamar a la función para obtener las estrellas
@@ -34,6 +35,7 @@ export const Article = (book, favorites) => {
     // Final estrellas
 
     const price = document.createElement("p");
+    price.className = "small";
     // Convertir el número a String
     const strNumber = `${book.price.toFixed(2)} €`; 
     // Reemplazar el punto decimal por coma y poner . separador de miles

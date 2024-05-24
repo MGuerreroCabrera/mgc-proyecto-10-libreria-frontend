@@ -62,7 +62,7 @@ ol, ul {
   --mgc-radius-xl: 40px;
 
   /* Font sizes */
-  --mgc-font-size-xs: clamp(12px, 0.30, 0,4rem);
+  --mgc-font-size-xs: 12px;
   --mgc-font-size-s: clamp(0.7rem, 0.15vw + 0.65rem, 0,9rem);
   --mgc-font-size-base: clamp(1rem, 0.40vw + 0.9rem, 1.2rem);
   --mgc-font-size-l: clamp(1.5rem, 1vw + 1.2rem, 2rem);
