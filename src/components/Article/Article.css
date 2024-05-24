@@ -44,6 +44,24 @@ article > p {
     transform: scale(1.2);
 }
 
+.star-disabled {
+    font-size: 24px;
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.star {
+    cursor: pointer;
+    font-size: 24px;
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+}
+.stars {
+    display: flex;
+    gap: var(--mgc-gap-s);
+}
 /* MEDIA QUERIES */
 /* Estilos para tablets en modo paisaje y laptops */
 @media only screen and (min-width: 769px) and (max-width: 1024px) {

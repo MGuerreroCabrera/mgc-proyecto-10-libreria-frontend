@@ -9,7 +9,6 @@ import { Home } from "../Home/Home";
 import { deleteOldMain, validateForm } from "../../utils/functions";
 import { Header } from "../../components/Header/Header";
 
-
 export const Login = (emailReceived = false, pwdReceived = false) => {
     
     // Eliminar el anterior main en el caso de que exista
@@ -26,34 +25,37 @@ export const Login = (emailReceived = false, pwdReceived = false) => {
     // Crear el formulario
     const form = Form("loginForm", "Introduce tus datos para iniciar sesión");
     // Crear los inputs del formulario
-    const inputName = Input("userName", "text", "Escribe tu e-mail", true);
-    const inputPassword = Input("password", "password", "*********", true);
+    const inputName = Input("userName", "text", "Escribe tu e-mail");
+    const inputPassword = Input("password", "password", "Introduce tu contraseña");
     // Crear el botón del formulario
     const btSend = Button("Enviar");
     // Añadir escuchador de eventos al click del botón
     btSend.addEventListener("click", async (event) => {
         event.preventDefault();
+
+        // Inicializar variables con valores del formulario
+        const emailInput = document.querySelector("#userName");
+        const email = emailInput.value;
+        const passwordInput = document.querySelector("#password");
+        const password = passwordInput.value;
+        
         // Validar campos obligatorios del formulario
         let control = false;
-        control = validateForm("userName", "password");
+        control = validateForm(emailInput, passwordInput);
+        //control = validateForm("userName", "password");
         if(control){return}
         // Comprobar si el párrafo de error existe y eliminarlo si es así
         const pError = document.querySelector(".error-login");
         if(pError) {
             pError.remove();
-        }
+        }              
 
-        // Crear variables email y password
-        const email = inputName.value;
-        const password = inputPassword.value;
-
-        // Crear la lógica del login        
-
-        // Recoger valores del formulario
+        // Crear variable y pasarla a formato json con los datos del formulario
         const user = JSON.stringify({
             email,
             password
-        })
+        });
+        
         // Opciones del fetch
         const fetchOptions = {
             method: "POST",

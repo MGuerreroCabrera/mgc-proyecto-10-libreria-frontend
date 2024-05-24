@@ -1,7 +1,4 @@
-import { Home } from "../../pages/Home/Home";
-import { routeControl } from "../../utils/controlRoutes";
-import { failedRequest } from "../../utils/functions";
-import { Header } from "../Header/Header";
+import { addFavorite, formatTitle, getStars, sendScore } from "../../utils/functions";
 import "./Article.css";
 
 export const Article = (book, favorites) => {
@@ -16,8 +13,33 @@ export const Article = (book, favorites) => {
     title.textContent = formatTitle(book.title);
     const publishedDate = document.createElement("p");
     publishedDate.textContent = `Publicado en ${book.publishedOn}`;
+    
+    // Crear sistema de valoración de libros.
+    // Llamar a la función para obtener las estrellas
+    const stars = getStars(book.rating);
+    // Añadir dataset id con el id del libro al la lista de estrellas.
+    stars.dataset.id = book._id;        
+    // Añadir evento de clic a cada estrella utilizando un bucle for
+    const starsChildNodes = stars.querySelectorAll('.star');
+    for (let i = 0; i < starsChildNodes.length; i++) {
+        const star = starsChildNodes[i];
+        star.addEventListener('click', () => {
+            console.log("Estoy haciendo click aquí");
+            const id = stars.getAttribute('data-id');
+            const rating = parseInt(star.getAttribute('data-rating'));
+            // Enviar la valoración del libro
+            sendScore(id, rating);  
+        });             
+    }    
+    // Final estrellas
+
     const price = document.createElement("p");
-    price.textContent = `${book.price.toFixed(2)} €`;              
+    // Convertir el número a String
+    const strNumber = `${book.price.toFixed(2)} €`; 
+    // Reemplazar el punto decimal por coma y poner . separador de miles
+    const formattedNumber = strNumber.replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    // Poner el precio del libro
+    price.textContent = formattedNumber;
     
     // Comprobar si el usuario ha hecho login
     if(localStorage.getItem("userId") && !favorites) {
@@ -42,54 +64,8 @@ export const Article = (book, favorites) => {
         card.append(pushLike);
     }
     // Inyectar elementos en el nodo padre
-    card.append(coverContainer, title, publishedDate, price);
+    card.append(coverContainer, title, stars, publishedDate, price);
 
     // Devolver el article    
     return card;
-}
-
-// Función que formatea el título del libro
-const formatTitle = (title) => {
-    if(title.length > 20) {
-        return title.slice(0, 18) + "..."
-    }else{
-        return title;
-    }
-}
-
-// Función que añade un libro a favoritos del usuario
-const addFavorite = async (idBook) => {
-    // Recoger los favoritos del localStorage y añadirle el libro recibido
-    const oldFavorites = localStorage.getItem("favorites");
-    // Crear array de los favoritos con el valor del localStorage
-    const oldFavoritesTransform = oldFavorites.split(",");
-    // Inserta al final del array el idBook recibido
-    oldFavoritesTransform.push(idBook);
-    // Del array resultante crear un string con valores separados por comas
-    const newFavorites = oldFavoritesTransform.join(",");
-    // Actualizar el valor del localStorage
-    localStorage.setItem("favorites", newFavorites);
-
-    // Crear objeto que contiene un array con el id del libro y pasarlo a JSON.stringify
-    const book = JSON.stringify({ favorites:[idBook] });
-    
-    // Opciones para llamar a la API
-    const options = {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
-        },
-        body: book
-    }
-
-    const res = await fetch(`http://localhost:3000/api/v1/users/${localStorage.getItem("userId")}`, options);
-
-    if(res.status === 200) {
-        Header();
-        Home();
-    } else {
-        console.log("ERROR");
-        alert("Error en la petición");
-    }
 }

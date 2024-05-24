@@ -16,6 +16,8 @@ h1.logo {
     font-weight: var(--mgc-font-size-l);  
 }
 
+/* Elementos de navegación con efecto hover */
+
 ul {
     display: flex;
     justify-content: center;
@@ -23,13 +25,31 @@ ul {
     gap: var(--mgc-gap-l);
 }
 
-a {
+ul li a {
+    position: relative;
+    padding: var(--mgc-padding-s);
     color: var(--mgc-dark-brown);
     font-size: var(--mgc-font-size-s);
 }
+li a:after, li a:before {
+    transition: all .5s;
+}
 
-a:hover {
-    border-bottom: 1px solid var(--mgc-light-brown);
+li a:after{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 0%;
+    content: '.';
+    color: transparent;
+    background: var(--mgc-dark-brown);
+    height: 3px;
+}
+
+li a:hover:after {
+    width: 80%;
 }
 
 /* MEDIA QUERIES */

@@ -3,7 +3,7 @@
     cursor: pointer;
     border: none;
     border-radius: var(--mgc-radius-s);
-    padding: var(--mgc-padding-s);
+    padding: var(--mgc-padding-m);
     background-color: var(--mgc-dark-brown);
     color: var(--mgc-white);
 }

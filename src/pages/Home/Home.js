@@ -9,18 +9,13 @@ import { routeControl } from "../../utils/controlRoutes";
 import { books } from "../../utils/books";
 
 
-export const Home = async () => {
-    
-    // Controlar si ya se está en la home
-    if(routeControl === "/home") {       
-        return;
-    }
+export const Home = async () => {    
     // Eliminar el anterior main en el caso de que exista
     deleteOldMain();
 
     // Crear el main de la home
-    Main();    
-
+    Main();        
+    
     // Seleccionar el main
     const main = document.querySelector("main");
     
@@ -48,7 +43,7 @@ export const Home = async () => {
         // Crear párrafo con el texto de la home si entras sin login
         const pHome = document.createElement("p");
         pHome.classList.add("txt-home");
-        pHome.textContent = "Bienvenido a la librería más molona de todo internet. Crea tu cuenta para poder elegir tus libros favoritos.";
+        pHome.textContent = "Bienvenido a la librería más molona de todo internet. Crea tu cuenta para poder elegir tus libros favoritos y valorarlos.";
         // Inyectar el párrafo al headerContainer
         headerContainer.append(pHome);
         // Inyectar el headerContainer al main    
@@ -63,23 +58,27 @@ export const Home = async () => {
     // Inyectar el contenedor de libros al main
     main.append(booksContainer);
 
-    //Controlar la petición de los libros al backend 😮🤔🤔
+    //Controlar la petición de los libros al backend
     if(books.length === 0) {
+        // Controlar si ya se está en la home
+        if(routeControl === "/home") {       
+            //return;
+            // Imprimir los libros en pantalla cogiendo los datos del array
+            printBooks(booksContainer, books);
+        } else {
+             // Hacer la petición al backend para que nos devuelva el listado de libros.
+            const res = await fetch("http://localhost:3000/api/v1/books");
 
-        // Hacer la petición al backend para que nos devuelva el listado de libros.
-        const res = await fetch("http://localhost:3000/api/v1/books");
+            // Pasar objeto res a json
+            const response = await res.json();
 
-        // Pasar objeto res a json
-        const response = await res.json();
-
-        for (const book of response) {
-            books.push(book);
-        }
-
-        // Imprimir los libros en pantalla obtenidos de la API
-        printBooks(booksContainer, response); 
+            for (const book of response) {
+                books.push(book);
+            }
+             // Imprimir los libros en pantalla obtenidos de la API
+            printBooks(booksContainer, response);
+        }        
     } else {
-
         // Imprimir los libros en pantalla cogiendo los datos del array
         printBooks(booksContainer, books); 
     }
