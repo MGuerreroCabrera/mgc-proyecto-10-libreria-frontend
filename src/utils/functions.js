@@ -1,6 +1,7 @@
 import { Header } from "../components/Header/Header";
 import { Favorites } from "../pages/Favorites/Favorites";
 import { Home } from "../pages/Home/Home";
+import { fetchData } from "./api";
 import { books } from "./books";
 import { routeControl, saveRoute } from "./controlRoutes";
 import { routes } from "./routes";
@@ -120,12 +121,12 @@ export const sendScore = async (id, rating) => {
         body: JSON.stringify({ rating })
     }
 
-    const res = await fetch(`http://localhost:3000/api/v1/books/${id}`, options);
+    //const res = await fetch(`http://localhost:3000/api/v1/books/${id}`, options);
+    const res = await fetchData("books", options, id);
     
-    if(res.status === 200) {
+    if(res._id) {
         // Actualizar el valor en el array de libros
         const book = books.find(element => element._id === id);
-        console.log("Voy a sumar " + rating + "estrellas");
         book.rating = ((book.rating * book.ratingCounts) + rating) / (book.ratingCounts + 1);
         book.ratingCounts++;
         if(routeControl === "/home"){
@@ -164,13 +165,10 @@ export const addFavorite = async (idBook) => {
         body: book
     }
 
-    const res = await fetch(`http://localhost:3000/api/v1/users/${localStorage.getItem("userId")}`, options);
+    await fetchData("favorites", options);
 
     Header();
     Home();
-    if(res.status !== 200) {
-        alert("Ha ocurrido un error en la petición");
-    }
 }
 
 // FUNCIONES DE HEADER
@@ -229,7 +227,6 @@ const printElement = (ul, route) => {
         window.history.pushState({}, "", e.target.href);
         route.function();
         saveRoute(route.src);
-        console.log("Voy a salvar la ruta " + route.src);
     });
     li.append(a);
     ul.append(li);
@@ -284,11 +281,8 @@ export const doLogin = async (email, password) => {
             "Content-Type": "application/json"
         }
     }
-    // Recoger resultado de la petición de login
-    const res = await fetch("http://localhost:3000/api/v1/users/login", fetchOptions);
-    
-    // Pasar resultado a formato JSON
-    const response = await res.json();
+    // Recoger resultado de la petición de login    
+    const response = await fetchData("login", fetchOptions);
 
     // Añadir elementos token y datos de usuario al localStorage
     localStorage.setItem("token", response.token);

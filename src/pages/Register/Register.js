@@ -3,6 +3,7 @@ import { Footer } from "../../components/Footer/Footer";
 import { Form } from "../../components/Form/Form";
 import { Input } from "../../components/Input/Input";
 import { Main } from "../../components/Main/Main";
+import { fetchData } from "../../utils/api";
 import { deleteOldMain, doLogin, validateError, validateForm } from "../../utils/functions";
 import "./Register.css";
 
@@ -66,8 +67,8 @@ export const Register = () => {
                 "Content-Type": "application/json"
             }
         }
-        // Recoger resultado de la petición de register
-        const res = await fetch("http://localhost:3000/api/v1/users/", fetchOptions);
+        // Recoger resultado de la petición de register        
+        const res = await fetchData("users", fetchOptions);
 
         // Comprobar si la dirección de correo electrónico ya está registrada
         let control_user = false;

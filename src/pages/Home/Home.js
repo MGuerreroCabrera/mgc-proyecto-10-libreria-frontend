@@ -7,6 +7,7 @@ import { Button } from "../../components/Button/Button";
 import { Article } from "../../components/Article/Article";
 import { routeControl } from "../../utils/controlRoutes";
 import { books } from "../../utils/books";
+import { fetchData } from "../../utils/api";
 
 
 export const Home = async () => {    
@@ -66,17 +67,14 @@ export const Home = async () => {
             // Imprimir los libros en pantalla cogiendo los datos del array
             printBooks(booksContainer, books);
         } else {
-             // Hacer la petición al backend para que nos devuelva el listado de libros.
-            const res = await fetch("http://localhost:3000/api/v1/books");
-
-            // Pasar objeto res a json
-            const response = await res.json();
-
-            for (const book of response) {
+            // Hacer la petición al backend para que nos devuelva el listado de libros utilizando función fetchData
+            const res = await fetchData("books");
+            // Recorrer respuesta para introducir los libros en el array de libros
+            for (const book of res) {
                 books.push(book);
             }
-             // Imprimir los libros en pantalla obtenidos de la API
-            printBooks(booksContainer, response);
+            // Imprimir los libros en pantalla obtenidos de la API
+            printBooks(booksContainer, res);
         }        
     } else {
         // Imprimir los libros en pantalla cogiendo los datos del array
